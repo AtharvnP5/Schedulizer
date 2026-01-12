@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f8;
+    padding: 20px;
+}
+
+.app-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* Calendar */
+.calendar {
+    flex: 2;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-header button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.day-names,
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day-names div {
+    text-align: center;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+.calendar-grid .date {
+    height: 60px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* To-do */
+.todo {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.add-task {
+    display: flex;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.add-task input {
+    flex: 1;
+    padding: 6px;
+}
+
+.add-task button {
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.task-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.date.today {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.date.selected {
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+}
+
+.task-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-list li.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.task-list button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 3px 6px;
+    cursor: pointer;
+}
+

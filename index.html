@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar To-Do App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <div class="calendar">
+            <div class="calendar-header">
+               <button id="prev-month">&lt;</button>
+               <h2 id="month-year"></h2>
+               <button id="next-month">&gt;</button>
+            </div>
+
+            <div class="day-names">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+
+            <div class="calendar-grid">
+                <!-- Days will be dynamically generated here -->
+            </div>
+        </div>
+
+        <!-- To-Do Section -->
+        <div class="todo">
+            <h3 id="selected-date-text">Tasks</h3>
+
+            <div class="add-task">
+                <input type="text" id="task-input" placeholder="Add a task...">
+                <button id="add-task-btn">Add</button>
+
+            </div>
+
+            <ul class="task-list" id="task-list">
+                <li>Sample Task</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
