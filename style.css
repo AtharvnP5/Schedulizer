@@ -118,3 +118,54 @@ body {
     cursor: pointer;
 }
 
+/* ---------- Mobile Responsive ---------- */
+@media (max-width: 768px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .app-container {
+        flex-direction: column;
+    }
+
+    .calendar,
+    .todo {
+        width: 100%;
+    }
+
+    .calendar-grid .date {
+        height: 45px;
+        font-size: 14px;
+    }
+
+    .calendar-header h2 {
+        font-size: 18px;
+    }
+
+    .day-names div {
+        font-size: 12px;
+    }
+
+    .add-task input {
+        font-size: 14px;
+    }
+
+    .add-task button {
+        font-size: 14px;
+    }
+}
+
+.date {
+    min-height: 44px; /* Apple recommended touch size */
+}
+
+.todo h3 {
+    position: sticky;
+    top: 0;
+    background: white;
+    padding-bottom: 5px;
+}
+
+
+
