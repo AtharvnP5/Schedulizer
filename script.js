@@ -1,34 +1,31 @@
 const calendarGrid = document.querySelector(".calendar-grid");
 const monthYear = document.getElementById("month-year");
 const selectedDateText = document.getElementById("selected-date-text");
-const todoPanel = document.getElementById("todo-panel");
-
 
 const taskInput = document.getElementById("task-input");
 const addTaskBtn = document.getElementById("add-task-btn");
 const taskList = document.getElementById("task-list");
+const todoPanel = document.getElementById("todo-panel");
 
 const today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
 let selectedDate = null;
 
-const prevMonthBtn = document.getElementById("prev-month");
-const nextMonthBtn = document.getElementById("next-month");
+let tasks = JSON.parse(localStorage.getItem("tasks")) || {};
 
+const months = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
+];
 
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-
-// All tasks stored here
-let tasks = JSON.parse(localStorage.getItem("tasks")) || {};
-
-const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-];
+function getDateKey(date) {
+    return date.toISOString().split("T")[0];
+}
 
 function renderCalendar(month, year) {
     calendarGrid.innerHTML = "";
@@ -37,7 +34,7 @@ function renderCalendar(month, year) {
     selectedDate = null;
     selectedDateText.textContent = "Tasks";
     taskList.innerHTML = "";
-
+    todoPanel.classList.add("hidden");
 
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -60,63 +57,30 @@ function renderCalendar(month, year) {
         }
 
         dateCell.addEventListener("click", () => {
-            selectDate(day, month, year);
+            selectDate(day, month, year, dateCell);
         });
 
         calendarGrid.appendChild(dateCell);
     }
 }
 
-prevMonthBtn.addEventListener("click", () => {
-    currentMonth--;
-
-    if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-    }
-
-    renderCalendar(currentMonth, currentYear);
-});
-
-nextMonthBtn.addEventListener("click", () => {
-    currentMonth++;
-
-    if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-    }
-
-    renderCalendar(currentMonth, currentYear);
-});
-
-
-function selectDate(day, month, year) {
-    
+function selectDate(day, month, year, element) {
     document.querySelectorAll(".date").forEach(d =>
         d.classList.remove("selected")
     );
 
-    document.querySelectorAll(".date").forEach(d => {
-        if (parseInt(d.textContent) === day) {
-            d.classList.add("selected");
-        }
-    });
+    element.classList.add("selected");
 
     selectedDate = new Date(year, month, day);
-
     selectedDateText.textContent =
         `Tasks for ${day} ${months[month]} ${year}`;
+
     todoPanel.classList.remove("hidden");
     renderTasks();
 }
 
-function getDateKey(date) {
-    return date.toISOString().split("T")[0];
-}
-
 function renderTasks() {
     taskList.innerHTML = "";
-
     if (!selectedDate) return;
 
     const dateKey = getDateKey(selectedDate);
@@ -125,28 +89,24 @@ function renderTasks() {
     dayTasks.forEach((task, index) => {
         const li = document.createElement("li");
         li.textContent = task.text;
-
         if (task.done) li.classList.add("completed");
 
         li.addEventListener("click", () => {
-          task.done = !task.done;
-          saveTasks();
-          renderTasks();
-       });
-
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "X";
-
-        deleteBtn.addEventListener("click", (e) => {
-         e.stopPropagation();
-        dayTasks.splice(index, 1);
-        saveTasks();
-        renderTasks();
+            task.done = !task.done;
+            saveTasks();
+            renderTasks();
         });
 
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "X";
+        delBtn.onclick = (e) => {
+            e.stopPropagation();
+            dayTasks.splice(index, 1);
+            saveTasks();
+            renderTasks();
+        };
 
-              li.appendChild(deleteBtn);
+        li.appendChild(delBtn);
         taskList.appendChild(li);
     });
 }
@@ -155,21 +115,30 @@ addTaskBtn.addEventListener("click", () => {
     if (!selectedDate || taskInput.value.trim() === "") return;
 
     const dateKey = getDateKey(selectedDate);
+    tasks[dateKey] = tasks[dateKey] || [];
 
-         if (!tasks[dateKey]) {
-        tasks[dateKey] = [];
-    }
-
-    tasks[dateKey].push({
-        text: taskInput.value,
-        done: false
-    });
-    saveTasks();
-
-
+    tasks[dateKey].push({ text: taskInput.value, done: false });
     taskInput.value = "";
+    saveTasks();
     renderTasks();
 });
 
-// Initial calendar render
+document.getElementById("prev-month").onclick = () => {
+    currentMonth--;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+    renderCalendar(currentMonth, currentYear);
+};
+
+document.getElementById("next-month").onclick = () => {
+    currentMonth++;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    renderCalendar(currentMonth, currentYear);
+};
+
 renderCalendar(currentMonth, currentYear);

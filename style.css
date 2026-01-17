@@ -6,11 +6,10 @@
 }
 
 body {
-    background: #000;
+    background: black;
     color: white;
     padding: 20px;
 }
-
 
 .app-container {
     display: flex;
@@ -19,15 +18,15 @@ body {
     margin: auto;
 }
 
-/* Calendar */
+/* Calendar & Todo cards */
 .calendar,
 .todo {
     background: #111;
-    color: white;
+    padding: 15px;
     border-radius: 8px;
 }
 
-
+/* Calendar header */
 .calendar-header {
     display: flex;
     justify-content: space-between;
@@ -38,40 +37,59 @@ body {
 .calendar-header button {
     padding: 5px 10px;
     cursor: pointer;
+    font-weight: bold;
 }
 
-.day-names,
-.calendar-grid {
+/* Day names */
+.day-names {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 5px;
 }
 
 .day-names div {
     text-align: center;
     font-weight: bold;
-    padding: 8px 0;
 }
 
+/* Calendar grid */
 .calendar-grid {
-    height: 60px;
-    border: 1px solid #ddd;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.date {
+    height: 50px;
+    border: 1px solid #333;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-}
-
-.date {
     color: white;
-    border: 1px solid #333;
 }
 
-
-h2, h3, .day-names div {
+/* Today = Yellow */
+.date.today {
+    background: #f1c40f;
+    color: black;
     font-weight: bold;
-    color: white;
 }
 
+/* Selected date = Green */
+.date.selected {
+    background: #2ecc71;
+    color: black;
+    font-weight: bold;
+}
+
+/* To-do */
+.todo h3 {
+    font-weight: bold;
+    background: #111;
+    position: sticky;
+    top: 0;
+    padding-bottom: 5px;
+}
 
 .add-task {
     display: flex;
@@ -82,36 +100,26 @@ h2, h3, .day-names div {
 .add-task input {
     flex: 1;
     padding: 6px;
+    background: #222;
+    color: white;
+    border: 1px solid #444;
 }
 
 .add-task button {
     padding: 6px 10px;
+    background: #2ecc71;
+    color: black;
+    border: none;
+    font-weight: bold;
     cursor: pointer;
 }
 
 .task-list li {
-    padding: 6px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.date.today {
-    background: #f1c40f;
-    color: black;
-    font-weight: bold;
-}
-
-
-.date.selected {
-    background: #2ecc71;
-    color: black;
-    font-weight: bold;
-}
-
-
-.task-list li {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
 }
 
 .task-list li.completed {
@@ -123,68 +131,23 @@ h2, h3, .day-names div {
     background: red;
     color: white;
     border: none;
-    padding: 3px 6px;
+    padding: 2px 6px;
     cursor: pointer;
 }
 
-/* ---------- Mobile Responsive ---------- */
-@media (max-width: 768px) {
-
-    body {
-        padding: 10px;
-    }
-
-    .app-container {
-        flex-direction: column;
-    }
-
-    .calendar,
-    .todo {
-        width: 100%;
-    }
-
-    .calendar-grid .date {
-        height: 45px;
-        font-size: 14px;
-    }
-
-    .calendar-header h2 {
-        font-size: 18px;
-    }
-
-    .day-names div {
-        font-size: 12px;
-    }
-
-    .add-task input {
-    background: #222;
-    color: white;
-    border: 1px solid #444;
-}
-
-    .add-task button {
-    background: #2ecc71;
-    color: black;
-    border: none;
-    font-weight: bold;
-}
-}
-
-.date {
-    min-height: 44px; /* Apple recommended touch size */
-}
-
-.todo h3 {
-    position: sticky;
-    top: 0;
-    background: white;
-    padding-bottom: 5px;
-}
-
+/* Hidden utility */
 .hidden {
     display: none;
 }
 
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
 
-
-
+    .date {
+        height: 44px;
+        font-size: 14px;
+    }
+}
