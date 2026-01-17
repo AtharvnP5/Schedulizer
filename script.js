@@ -1,6 +1,8 @@
 const calendarGrid = document.querySelector(".calendar-grid");
 const monthYear = document.getElementById("month-year");
 const selectedDateText = document.getElementById("selected-date-text");
+const todoPanel = document.getElementById("todo-panel");
+
 
 const taskInput = document.getElementById("task-input");
 const addTaskBtn = document.getElementById("add-task-btn");
@@ -89,6 +91,7 @@ nextMonthBtn.addEventListener("click", () => {
 
 
 function selectDate(day, month, year) {
+    
     document.querySelectorAll(".date").forEach(d =>
         d.classList.remove("selected")
     );
@@ -103,7 +106,7 @@ function selectDate(day, month, year) {
 
     selectedDateText.textContent =
         `Tasks for ${day} ${months[month]} ${year}`;
-
+    todoPanel.classList.remove("hidden");
     renderTasks();
 }
 
